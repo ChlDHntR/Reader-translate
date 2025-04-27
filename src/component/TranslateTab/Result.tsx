@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { ResultContext } from '../context/resultProvider'
-import DefinitionList from './definitionList'
+import DefinitionList from './DefinitionList'
+import ReadingKana from './ReadingKana'
 
 export default function Result({ searchStatus }: { searchStatus: boolean }) {
   const { result } = useContext<any>(ResultContext)
@@ -14,6 +15,8 @@ export default function Result({ searchStatus }: { searchStatus: boolean }) {
       {searchStatus && <p>Searching...</p>}
       {result !== null && !searchStatus ? (
         <>
+          <h2 className='font-bold'>Kana: </h2>
+          <ReadingKana results={result} />
           <h2 className='font-bold'>Definition: </h2>
           <DefinitionList results={result} />
         </>

@@ -21,8 +21,7 @@ export default function TranslateTab({ transTabOn, setTransTabOn }: { transTabOn
           setResult(null)
           return
         }
-        console.log(Object.values(res.data))
-        setResult(Object.values(res.data))
+        setResult(res.data)
       })
       .catch((err) => {
         console.error(err)

@@ -5,11 +5,12 @@ import axios from 'axios'
 import TranslateTab from './component/TranslateTab/TranslateTab'
 import ResultProvider from './component/context/resultProvider'
 import type { Contents, Rendition } from 'epubjs'
+import { Result } from './component/type/typeDefi'
 
 function App() {
   const [location, setLocation] = useState<string | number>(0)
   const [transTabOn, setTransTabOn] = useState(false)
-  const [result, setResult] = useState<any | null>(null)
+  const [result, setResult] = useState<Result | null>(null)
   const rendition = useRef<Rendition | undefined>(undefined)
 
   return (
