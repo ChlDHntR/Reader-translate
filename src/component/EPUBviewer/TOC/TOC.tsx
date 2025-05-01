@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Toc } from '../../type/typeDefi'
 import Bookmark from './Bookmark'
 

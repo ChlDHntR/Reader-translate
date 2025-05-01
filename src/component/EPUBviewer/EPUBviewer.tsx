@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ePub from 'epubjs'
 import TOC from './TOC/TOC'
 //import { ReactComponent as Bars } from '../../assets/bars.svg'
@@ -13,7 +13,6 @@ function EpubReader({ url }: { url: string }) {
   const [tocOn, setTocOn] = useState(false)
   const tocDivRef = useRef<HTMLDivElement>(null)
   const { setSelectedText } = useSelectedText()
-
   const [pageInfo, setPageInfo] = useState({
     page: 0,
     total: 0,
@@ -45,7 +44,7 @@ function EpubReader({ url }: { url: string }) {
 
     rendition.display()
 
-    rendition.on('selected', function (cfiRange: any, contents: any) {
+    rendition.on('selected', function (contents: any) {
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
