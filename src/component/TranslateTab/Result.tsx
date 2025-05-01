@@ -7,11 +7,7 @@ export default function Result({ searchStatus }: { searchStatus: boolean }) {
   const { result } = useContext<any>(ResultContext)
 
   return (
-    <div
-      className={`h-50 w-screen ${
-        result === null ? 'text-center flex justify-center items-center' : ''
-      } overflow-y-scroll`}
-    >
+    <div className={`h-50 ${result === null ? 'text-center flex justify-center items-center' : ''} overflow-auto`}>
       {searchStatus && <p>Searching...</p>}
       {result !== null && !searchStatus ? (
         <>

@@ -1,13 +1,7 @@
 import { Result } from '../type/typeDefi'
 
 export default function ReadingKana({ results }: { results: Result }) {
-  let resultArr = results.kanaReading
+  let result = results.kanaReading
 
-  return (
-    <ul className='list-decimal ml-5'>
-      {resultArr.map((result, index) => (
-        <li key={index}> {result} </li>
-      ))}
-    </ul>
-  )
+  return <p className='ml-5'>{result}</p>
 }
