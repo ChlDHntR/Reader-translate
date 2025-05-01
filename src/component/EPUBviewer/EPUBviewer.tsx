@@ -44,7 +44,7 @@ function EpubReader({ url }: { url: string }) {
 
     rendition.display()
 
-    rendition.on('selected', function (contents: any) {
+    rendition.on('selected', function (cfiRange: any, contents: any) {
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
