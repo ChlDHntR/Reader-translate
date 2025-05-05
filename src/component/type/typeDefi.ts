@@ -1,6 +1,10 @@
-export type Result = {
+type returnType = {
   definition: string[]
   kanaReading: string
+}
+
+export type Result = {
+  answer: returnType[]
 }
 
 export type Toc = {

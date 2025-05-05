@@ -1,7 +1,7 @@
 import { Result } from '../type/typeDefi'
 
-export default function ReadingKana({ results }: { results: Result }) {
+export default function ReadingKana({ results }: { results: any }) {
   let result = results.kanaReading
 
-  return <p className='ml-5'>{result}</p>
+  return <p className='ml-0'>"{result}"</p>
 }

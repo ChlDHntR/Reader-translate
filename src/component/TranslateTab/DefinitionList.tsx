@@ -1,11 +1,11 @@
 import type { Result } from '../type/typeDefi'
 
-export default function DefinitionList({ results }: { results: Result }) {
+export default function DefinitionList({ results }: { results: any }) {
   let resultArr = Object.values(results.definition)
 
   return (
-    <ul className='list-decimal ml-5'>
-      {resultArr.map((result, index) => (
+    <ul className='list-disc ml-5'>
+      {resultArr.map((result: any, index) => (
         <li key={index}> {result} </li>
       ))}
     </ul>

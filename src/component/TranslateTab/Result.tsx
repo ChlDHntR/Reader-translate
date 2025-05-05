@@ -11,10 +11,15 @@ export default function Result({ searchStatus }: { searchStatus: boolean }) {
       {searchStatus && <p>Searching...</p>}
       {result !== null && !searchStatus ? (
         <>
-          <h2 className='font-bold'>Kana: </h2>
-          <ReadingKana results={result} />
-          <h2 className='font-bold'>Definition: </h2>
-          <DefinitionList results={result} />
+          {result.answer.map((item: any, index: number) => (
+            <div key={index}>
+              <h1 className='font-bold'>Definition {index + 1}</h1>
+              <div className='mb-2 ml-5'>
+                <ReadingKana results={item} />
+                <DefinitionList results={item} />
+              </div>
+            </div>
+          ))}
         </>
       ) : (
         <p className={searchStatus ? 'hidden' : ''}>NO RESULT</p>
