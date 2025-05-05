@@ -1,5 +1,3 @@
-import type { Result } from '../type/typeDefi'
-
 export default function DefinitionList({ results }: { results: any }) {
   let resultArr = Object.values(results.definition)
 
