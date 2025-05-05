@@ -1,5 +1,3 @@
-import { Result } from '../type/typeDefi'
-
 export default function ReadingKana({ results }: { results: any }) {
   let result = results.kanaReading
 
