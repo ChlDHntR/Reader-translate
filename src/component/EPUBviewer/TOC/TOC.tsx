@@ -16,6 +16,8 @@ export default function TOC({
   //   useEffect(() => {
   //     setForceRender(tocDivRef.current.getBoundingClientRect().width)
   //   }, [])
+  const currentPos = renditionRef.current?.location.start.href
+  //console.log(toc[2].href.split('#')[0])
 
   return (
     <div id='tocDiv' ref={tocDivRef} className={'top-0 left-0 min-w-40 h-full bg-white z-50 relative '}>
@@ -23,15 +25,15 @@ export default function TOC({
         <div className='flex flex-row justify-between items-center p-2 bg-gray-200'>
           <h1 className='text-lg font-bold'>Table of Contents</h1>
         </div>
-        <ul className='p-1'>
+        <ul className='p-1 h-72 overflow-y-scroll'>
           {toc.map((item, index) => (
-            <li key={index} className='py-0 border-b-1'>
+            <li key={index} className={`py-0 border-b-1`}>
               <a
                 onClick={() => {
                   setTocOn(false)
                   renditionRef.current?.display(item.href)
                 }}
-                className='text-blue-500 text-xs hover:underline'
+                className= {`${currentPos === item.href.split('#')[0] ? 'text-black' : 'text-blue-500'} text-xs hover:underline`}
               >
                 {item.label}
               </a>
