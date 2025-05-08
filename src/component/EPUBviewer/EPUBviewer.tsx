@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import ePub, { Rendition } from 'epubjs'
+import ePub from 'epubjs'
 import TOC from './TOC/TOC'
 //import { ReactComponent as Bars } from '../../assets/bars.svg'
 import { HiBars3 } from 'react-icons/hi2'
