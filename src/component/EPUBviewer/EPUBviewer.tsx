@@ -4,7 +4,6 @@ import TOC from './TOC/TOC'
 //import { ReactComponent as Bars } from '../../assets/bars.svg'
 import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
-import Bookmark from './TOC/Bookmark'
 
 function EpubReader({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
