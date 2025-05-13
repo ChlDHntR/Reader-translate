@@ -16,16 +16,16 @@ function EpubReader({ url }: { url: string }) {
   const [pageInfo, setPageInfo] = useState({
     page: 0,
     total: 0,
-    percent: 0,
     chapterTitle: '',
   })
-
+  const buttonClassName = 'text-base w-30/100'
   //const [jumpPage, setJumpPage] = useState('')
 
   // useEffect(() => {
   //   if (tocDivRef.current) {
   //   }
   // }, [delta])
+
 
   useEffect(() => {
     if (!viewerRef.current) return
@@ -42,12 +42,12 @@ function EpubReader({ url }: { url: string }) {
     renditionRef.current = rendition
     rendition.themes.fontSize('100%')
 
-    //const bookmark = localStorage.getItem('bookmark')
+    const bookmark = localStorage.getItem('bookmark')
     //alert("tft")
-    rendition.display()
-    // if (bookmark) {
-    //   rendition.display(bookmark)
-    // }
+    //rendition.display()
+    if (bookmark) {
+      rendition.display(bookmark)
+    }
 
     rendition.on('selected', function (cfiRange: any, contents: any) {
       console.log(cfiRange)
@@ -57,7 +57,7 @@ function EpubReader({ url }: { url: string }) {
     })
 
     rendition.on('relocated', (location: any) => {
-      const { displayed, percentage, href } = location.start
+      const { displayed, href } = location.start
 
       // Update chapter title
       const spineItem = book.spine.get(href).href
@@ -66,7 +66,6 @@ function EpubReader({ url }: { url: string }) {
       setPageInfo({
         page: displayed.page,
         total: displayed.total,
-        percent: Math.round(percentage * 100),
         chapterTitle: title,
       })
     })
@@ -115,15 +114,14 @@ function EpubReader({ url }: { url: string }) {
           setTocOn={setTocOn}
         />
       )}
-      <div className='h-screen min-w-screen  p-3'>
+      <div className="h-screen min-w-screen  p-3">
         {/* Control buttons */}
-        <div className='flex mb-2.5 justify-between'>
-          <div className='flex flex-row'>
-            <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
-            <button onClick={handleNext}>⬅ Next</button>
-            <button onClick={handlePrev} style={{ marginLeft: 10 }}>
-              Prev ➡
-            </button>
+        <div className="flex mb-2.5 justify-between">
+          <div className="flex flex-row">
+            <HiBars3
+              onClick={handleDisplayToc}
+              className="h-6 w-6 text-blue-400"
+            />
           </div>
 
           {/* Jump to page */}
@@ -152,14 +150,17 @@ function EpubReader({ url }: { url: string }) {
         />
 
         {/* Footer info */}
-        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }}>
+        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
+          <button onClick={handleNext} className={buttonClassName}>⬅ Next</button>
           <div>
-            <strong>{pageInfo.chapterTitle}</strong>
+            <div>
+              <strong>{pageInfo.chapterTitle}</strong>
+            </div>
+            <div>
+              Page {pageInfo.page} / {pageInfo.total}
+            </div>
           </div>
-          <div>
-            Page {pageInfo.page} / {pageInfo.total}
-          </div>
-          <div>Progress: {pageInfo.percent}%</div>
+          <button onClick={handlePrev} className={buttonClassName}>Prev ➡</button>
         </div>
       </div>
     </div>

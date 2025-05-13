@@ -22,7 +22,7 @@ function App() {
     <ResultProvider value={{ result, setResult }}>
       <div className='oveflow-hidden' style={{ height: '100vh', direction: 'ltr' }}>
         <div style={{ height: '100vh' }}>
-          <div className='relative h-94/100 overflow-hidden '>
+          <div className='relative h-full overflow-hidden '>
             {/* <ReactEpubViewer
               url={'http://192.168.0.101:3003/book1/makeine4.epub'}
               ref={viewerRef}
