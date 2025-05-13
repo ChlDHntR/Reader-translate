@@ -4,6 +4,7 @@ import TOC from './TOC/TOC'
 //import { ReactComponent as Bars } from '../../assets/bars.svg'
 import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
+import Bookmark from './TOC/Bookmark'
 
 function EpubReader({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
@@ -20,7 +21,7 @@ function EpubReader({ url }: { url: string }) {
     chapterTitle: '',
   })
 
-  const [jumpPage, setJumpPage] = useState('')
+  //const [jumpPage, setJumpPage] = useState('')
 
   // useEffect(() => {
   //   if (tocDivRef.current) {
@@ -42,7 +43,12 @@ function EpubReader({ url }: { url: string }) {
     renditionRef.current = rendition
     rendition.themes.fontSize('100%')
 
+    //const bookmark = localStorage.getItem('bookmark')
+    //alert("tft")
     rendition.display()
+    // if (bookmark) {
+    //   rendition.display(bookmark)
+    // }
 
     rendition.on('selected', function (cfiRange: any, contents: any) {
       console.log(cfiRange)
@@ -83,14 +89,14 @@ function EpubReader({ url }: { url: string }) {
     renditionRef.current?.prev()
   }
 
-  const handleJump = () => {
-    // Use displayed.page
-    let renditionAAA = renditionRef.current
-    if (renditionAAA.location.start.cfi === jumpPage) {
-      return
-    }
-    renditionRef.current?.display(jumpPage)
-  }
+  // const handleJump = () => {
+  //   // Use displayed.page
+  //   let renditionAAA = renditionRef.current
+  //   if (renditionAAA.location.start.cfi === jumpPage) {
+  //     return
+  //   }
+  //   renditionRef.current?.display(jumpPage)
+  // }
 
   //console.log(bookRef.current?.navigation.toc)
   //console.log(renditionRef.current?.location)
@@ -122,7 +128,7 @@ function EpubReader({ url }: { url: string }) {
           </div>
 
           {/* Jump to page */}
-          <div>
+          {/* <div>
             <input
               type='text'
               value={jumpPage}
@@ -132,7 +138,7 @@ function EpubReader({ url }: { url: string }) {
               style={{ width: 80, marginRight: 5 }}
             />
             <button onClick={handleJump}>Go</button>
-          </div>
+          </div> */}
         </div>
 
         {/* Reader viewport */}

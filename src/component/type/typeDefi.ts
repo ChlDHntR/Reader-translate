@@ -1,6 +1,7 @@
 type returnType = {
   definition: string[]
   kanaReading: string
+  kanjiWriting: string[]
 }
 
 export type Result = {
