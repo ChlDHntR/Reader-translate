@@ -26,7 +26,6 @@ function EpubReader({ url }: { url: string }) {
   //   }
   // }, [delta])
 
-
   useEffect(() => {
     if (!viewerRef.current) return
 
@@ -43,10 +42,13 @@ function EpubReader({ url }: { url: string }) {
     rendition.themes.fontSize('100%')
 
     const bookmark = localStorage.getItem('bookmark')
+    console.log('bookmark', bookmark)
     //alert("tft")
     //rendition.display()
     if (bookmark) {
       rendition.display(bookmark)
+    } else {
+      rendition.display()
     }
 
     rendition.on('selected', function (cfiRange: any, contents: any) {
@@ -114,14 +116,11 @@ function EpubReader({ url }: { url: string }) {
           setTocOn={setTocOn}
         />
       )}
-      <div className="h-screen min-w-screen  p-3">
+      <div className='h-screen min-w-screen  p-3'>
         {/* Control buttons */}
-        <div className="flex mb-2.5 justify-between">
-          <div className="flex flex-row">
-            <HiBars3
-              onClick={handleDisplayToc}
-              className="h-6 w-6 text-blue-400"
-            />
+        <div className='flex mb-2.5 justify-between'>
+          <div className='flex flex-row'>
+            <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
           </div>
 
           {/* Jump to page */}
@@ -151,7 +150,9 @@ function EpubReader({ url }: { url: string }) {
 
         {/* Footer info */}
         <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
-          <button onClick={handleNext} className={buttonClassName}>⬅ Next</button>
+          <button onClick={handleNext} className={buttonClassName}>
+            ⬅ Next
+          </button>
           <div>
             <div>
               <strong>{pageInfo.chapterTitle}</strong>
@@ -160,7 +161,9 @@ function EpubReader({ url }: { url: string }) {
               Page {pageInfo.page} / {pageInfo.total}
             </div>
           </div>
-          <button onClick={handlePrev} className={buttonClassName}>Prev ➡</button>
+          <button onClick={handlePrev} className={buttonClassName}>
+            Prev ➡
+          </button>
         </div>
       </div>
     </div>
