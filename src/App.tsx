@@ -37,7 +37,8 @@ function App() {
                 return
               }}
             /> */}
-            <EPUBviewer url='https://dictionary-api-server.onrender.com/book1/makeine4_2.epub' />
+            <EPUBviewer url='https://dictionary-api-server.onrender.com/book1/makeine5.epub' />
+            {/* <EPUBviewer url='http://192.168.0.102:3003/book1/makeine5.epub' /> */}
           </div>
         </div>
         <div
