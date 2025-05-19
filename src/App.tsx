@@ -6,11 +6,13 @@ import { Result } from './component/type/typeDefi'
 import 'regenerator-runtime'
 import EPUBviewer from './component/EPUBviewer/EPUBviewer'
 import useSelectedText from './hook/useSelectedText'
+import { useParams } from 'react-router'
 
 function App() {
   const [transTabOn, setTransTabOn] = useState(false)
   const [result, setResult] = useState<Result | null>(null)
   const { selectedText } = useSelectedText()
+  const { bookName } = useParams()
 
   useEffect(() => {
     if (selectedText.length > 0) {
@@ -37,7 +39,7 @@ function App() {
                 return
               }}
             /> */}
-            <EPUBviewer url='https://dictionary-api-server.onrender.com/book1/makeine4_2.epub' />
+            <EPUBviewer url={`http://172.24.128.1:3003/book1/${bookName}.epub`} />
           </div>
         </div>
         <div

@@ -18,6 +18,7 @@ export default function TOC({
   //   }, [])
   const currentPos = renditionRef.current?.location.start.href
   //console.log(toc[2].href.split('#')[0])
+  console.log(renditionRef.current)
 
   return (
     <div id='tocDiv' ref={tocDivRef} className={'top-0 left-0 min-w-40 h-full bg-white z-50 relative '}>
