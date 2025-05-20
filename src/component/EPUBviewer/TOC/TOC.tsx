@@ -33,7 +33,9 @@ export default function TOC({
                   setTocOn(false)
                   renditionRef.current?.display(item.href)
                 }}
-                className= {`${currentPos === item.href.split('#')[0] ? 'text-black' : 'text-blue-500'} text-xs hover:underline`}
+                className={`${
+                  currentPos === item.href.split('#')[0] ? 'text-black' : 'text-blue-500'
+                } text-xs hover:underline`}
               >
                 {item.label}
               </a>

@@ -4,6 +4,7 @@ import TOC from './TOC/TOC'
 //import { ReactComponent as Bars } from '../../assets/bars.svg'
 import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
+import { useParams } from 'react-router'
 
 function EpubReader({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
@@ -18,6 +19,7 @@ function EpubReader({ url }: { url: string }) {
     total: 0,
     chapterTitle: '',
   })
+  const { bookName } = useParams()
   const buttonClassName = 'text-base w-30/100'
   //const [jumpPage, setJumpPage] = useState('')
 
@@ -41,9 +43,7 @@ function EpubReader({ url }: { url: string }) {
     renditionRef.current = rendition
     rendition.themes.fontSize('100%')
 
-    const bookmark = localStorage.getItem('bookmark')
-    console.log('bookmark', bookmark)
-    //alert("tft")
+    const bookmark = localStorage.getItem(bookName || '')
     //rendition.display()
     if (bookmark) {
       rendition.display(bookmark)
