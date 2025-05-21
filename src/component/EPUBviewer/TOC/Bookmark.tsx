@@ -1,10 +1,14 @@
+import { useParams } from 'react-router'
+
 export default function Bookmark({ renditionRef, setTocOn }: { renditionRef: any; setTocOn: any }) {
+  const { bookName } = useParams()
+
   const handleAddBookmark = () => {
-    localStorage.setItem('bookmark', renditionRef.current?.location.start.cfi)
+    localStorage.setItem(bookName || '', renditionRef.current?.location.start.cfi)
     alert('Bookmark added')
   }
   const handleLoadBookmark = () => {
-    let bookmark = localStorage.getItem('bookmark')
+    let bookmark = localStorage.getItem(bookName || '')
     if (!bookmark) {
       alert('No bookmark found')
       return
