@@ -64,7 +64,7 @@ function ReaderIndex() {
             >
               {transTabOn ? 'DOWN' : 'UP'}
             </div>
-            {/* <div
+            <div
               id="changer"
               className="w-16 h-6 bg-gray-400 rounded-t-lg cursor-pointer ml-1 text-sm text-center"
               onClick={() => {
@@ -72,7 +72,7 @@ function ReaderIndex() {
               }}
             >
               HEHE
-            </div> */}
+            </div>
           </div>
           <TranslateTab monoLang={monoLang}/>
         </div>
