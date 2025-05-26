@@ -3,8 +3,9 @@ import Result from './Result'
 import axios from 'axios'
 import { ResultContext } from '../context/resultProvider'
 import useSelectedText from '../../hook/useSelectedText'
+import ResultMonoLang from './ResultMonoLang'
 
-export default function TranslateTab() {
+export default function TranslateTab({ monoLang }: { monoLang: any }) {
   const inputTextRef = useRef<HTMLDivElement>(null)
   const { setResult } = useContext<any>(ResultContext)
   const [searchStatus, setSearchStatus] = useState(false)
@@ -43,10 +44,13 @@ export default function TranslateTab() {
     timeOutRef.current = setTimeout(async () => {
       setSearchStatus(true)
       try {
-        const res = await axios.post('https://dictionary-api-server.onrender.com/api/search', {
-          // const res = await axios.post('http://192.168.0.102:3003/api/search', {
-          content: inputTextRef.current?.innerText,
-        })
+        const res = await axios.post(
+          'https://dictionary-api-server.onrender.com/api/search',
+          {
+            // const res = await axios.post('http://192.168.0.102:3003/api/search', {
+            content: inputTextRef.current?.innerText,
+          }
+        )
         if (res.data === 'no result found') {
           setResult(null)
           setSearchStatus(false)
@@ -69,11 +73,11 @@ export default function TranslateTab() {
 
   return (
     <>
-      <div className='bg-gray-100 w-screen p-2 flex flex-col'>
+      <div className="bg-gray-100 w-screen p-2 flex flex-col">
         <div
           ref={inputTextRef}
-          contentEditable='true'
-          className='text-lg bg-white border border-black rounded-md pl-0.5'
+          contentEditable="true"
+          className="text-lg bg-white border border-black rounded-md pl-0.5"
           onInput={handleSearch}
         ></div>
         {/* <input
@@ -82,7 +86,7 @@ export default function TranslateTab() {
           ref={inputTextRef}
           onChange={handleSearch}
         /> */}
-        <Result searchStatus={searchStatus} />
+        <Result searchStatus={searchStatus}/>
       </div>
     </>
   )
