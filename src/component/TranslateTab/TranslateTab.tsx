@@ -3,9 +3,9 @@ import Result from './Result'
 import axios from 'axios'
 import { ResultContext } from '../context/resultProvider'
 import useSelectedText from '../../hook/useSelectedText'
-import ResultMonoLang from './ResultMonoLang'
 
-export default function TranslateTab({ monoLang }: { monoLang: any }) {
+
+export default function TranslateTab() {
   const inputTextRef = useRef<HTMLDivElement>(null)
   const { setResult } = useContext<any>(ResultContext)
   const [searchStatus, setSearchStatus] = useState(false)
