@@ -12,7 +12,6 @@ function ReaderIndex() {
   const [result, setResult] = useState<any>(null)
   const { selectedText } = useSelectedText()
   const { bookName } = useParams()
-  const [ monoLang, setMonoLang ] = useState(false)
 
   useEffect(() => {
     if (selectedText.length > 0) {
@@ -67,14 +66,12 @@ function ReaderIndex() {
             <div
               id="changer"
               className="w-16 h-6 bg-gray-400 rounded-t-lg cursor-pointer ml-1 text-sm text-center"
-              onClick={() => {
-                setMonoLang(!monoLang)
-              }}
+        
             >
               HEHE
             </div>
           </div>
-          <TranslateTab monoLang={monoLang}/>
+          <TranslateTab />
         </div>
       </div>
     </ResultProvider>
