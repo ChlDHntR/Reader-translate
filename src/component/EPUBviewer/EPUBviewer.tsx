@@ -27,7 +27,7 @@ function EpubReader({ url }: { url: string }) {
   //   if (tocDivRef.current) {
   //   }
   // }, [delta])
-
+  
   useEffect(() => {
     if (!viewerRef.current) return
 
@@ -52,6 +52,7 @@ function EpubReader({ url }: { url: string }) {
     }
 
     rendition.on('selected', function (cfiRange: any, contents: any) {
+      console.log(cfiRange)
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
