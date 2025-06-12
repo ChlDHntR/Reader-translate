@@ -1,54 +1,27 @@
-# React + TypeScript + Vite
+# 📖 Reader Translate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Reader Translate is a web application designed to help users read Japanese language ebook (EPUB) while translating unfamiliar words or phrases quickly and easily without constantly switching between dictionary apps.
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🧠 **Instant Word Translation**  
+  Highlight a word to see its meaning.
 
-## Expanding the ESLint configuration
+- 📚 **Custom Text Input**  
+  Paste any text you'd like translate.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 📝 **Vocabulary List** (WIP / Future features)
+  Save translated words to your personal vocabulary list for review later.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 🎨 **Clean, Focused UI**  
+  Built for distraction-free reading and learning.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- 📚 **Bookmark**
+  Save bookmark and continue where you left off on opening.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🛠️ Tech Stack
+- **Library:** Epub.JS credit to @futurepress (https://github.com/futurepress/epub.js)
+- **Frontend:** React, TypeScript, Tailwind CSS  
+- **Backend:** Node.js / Express  
+- **State Management:** Zustand / Redux 
+- **Deployment:** Netlify (FrontEnd), Render (BackEnd)
