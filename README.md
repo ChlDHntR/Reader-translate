@@ -1,6 +1,6 @@
 # 📖 Reader Translate
 
-Reader Translate is a web application designed to help users read Japanese language ebook (EPUB) while translating unfamiliar words or phrases quickly and easily without constantly switching between dictionary apps.
+Reader Translate is my hobby web application designed to help read Japanese language ebook (EPUB) while translating unfamiliar words or phrases quickly and easily without constantly switching between dictionary apps.
 
 ## 🌟 Features
 
