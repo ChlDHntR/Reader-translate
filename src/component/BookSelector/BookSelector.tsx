@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
+import BookCard from './BookCard'
 
 function BookSelector() {
   const [bookList, setBookList] = useState<string[]>([])
@@ -28,26 +29,21 @@ function BookSelector() {
   }
 
   return (
-    <div>
+    <>
       {fetching ? (
         <div className='flex justify-center items-center h-screen'>FETCHING DATA...</div>
       ) : (
         <div>
-          <ul className='flex flex-col text-center'>
+          <h1 className='text-center font-bold text-lg'>SELECT BOOK</h1>
+          <div className='flex flex-wrap gap-6 justify-start p-4'>
             {bookList[0] &&
               bookList.map((element: string) => (
-                <li
-                  className='m-2 font-bold border-2 rounded-md text-3xl'
-                  onClick={() => handleRedirect(element)}
-                  key={element}
-                >
-                  {element}
-                </li>
+                <BookCard key={element} handleRedirect={() => handleRedirect(element)} bookName={element} />
               ))}
-          </ul>
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
