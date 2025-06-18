@@ -29,18 +29,21 @@ function BookSelector() {
   }
 
   return (
-    <div>
+    <>
       {fetching ? (
         <div className='flex justify-center items-center h-screen'>FETCHING DATA...</div>
       ) : (
         <div>
+          <h1 className='text-center font-bold text-lg'>SELECT BOOK</h1>
+          <div className='flex flex-wrap gap-6 justify-start p-4'>
             {bookList[0] &&
               bookList.map((element: string) => (
-                <BookCard handleRedirect={() => handleRedirect(element)} bookName={element} />
+                <BookCard key={element} handleRedirect={() => handleRedirect(element)} bookName={element} />
               ))}
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
