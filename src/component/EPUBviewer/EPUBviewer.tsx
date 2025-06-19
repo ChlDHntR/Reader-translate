@@ -4,7 +4,7 @@ import TOC from './TOC/TOC'
 //import { ReactComponent as Bars } from '../../assets/bars.svg'
 import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 function EpubReader({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
@@ -20,6 +20,8 @@ function EpubReader({ url }: { url: string }) {
     chapterTitle: '',
   })
   const { bookName } = useParams()
+  const navigate = useNavigate()
+
   const buttonClassName = 'text-base w-30/100'
   //const [jumpPage, setJumpPage] = useState('')
 
@@ -27,7 +29,7 @@ function EpubReader({ url }: { url: string }) {
   //   if (tocDivRef.current) {
   //   }
   // }, [delta])
-  
+
   useEffect(() => {
     if (!viewerRef.current) return
 
@@ -121,6 +123,12 @@ function EpubReader({ url }: { url: string }) {
         <div className='flex mb-2.5 justify-between'>
           <div className='flex flex-row'>
             <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
+          </div>
+          <div
+            onClick={() => navigate('/')}
+            className='flex flex-row items-center text-white bg-blue-500 rounded-lg pl-0.5 pr-1 cursor-pointer'
+          >
+            <p>CHANGE BOOK</p>
           </div>
 
           {/* Jump to page */}
