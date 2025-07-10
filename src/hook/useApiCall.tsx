@@ -6,14 +6,14 @@ export default function useApiCall(
   content: null | any
 ) {
   let data: any
-
+  const baseURl = ''
     const fetch = async () => {
       try {
         if (api === 'get') {
-          data = axios.get(url)
+          data = axios.get(`${baseURl+url}`)
         }
         if (api === 'post') {
-          data = axios.post(url, content)
+          data = axios.post(`${baseURl+url}`, content)
         }
       } catch (err) {
         console.log(err)
