@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router'
 import BookCard from './BookCard'
 import useApiCall from '../../hook/useApiCall'
@@ -31,7 +30,7 @@ function BookSelector() {
         setFetching(false)
       } ,
       null)
-      
+
   }, [])
 
   const handleRedirect = (book: string) => {
