@@ -1,10 +1,12 @@
+import { BaseUrl } from "../type/BaseUrl";
+
 export default function BookCard({ bookName, handleRedirect }: { bookName: string; handleRedirect: any }) {
   return (
     <div className='max-w-40 bg-white shadow-md overflow-hidden' onClick={handleRedirect}>
       <div className='aspect-[2/3]'>
         <img
           className='w-full h-full object-cover'
-          src={`https://dictionary-api-server.onrender.com/book1/covers/${bookName}.jpg`}
+          src={`${BaseUrl.returnUrl()}/book1/covers/${bookName}.jpg`}
           alt='bookCover'
         />
       </div>

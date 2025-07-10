@@ -1,25 +1,24 @@
 import axios from 'axios'
+import { BaseUrl } from '../component/type/BaseUrl'
 
-export default function useApiCall(
+export default async function useApiCall(
   api: string,
   url: string,
+  callback: (arg: any) => void,
   content: null | any
 ) {
-  let data: any
-
-    const fetch = async () => {
-      try {
-        if (api === 'get') {
-          data = axios.get(url)
-        }
-        if (api === 'post') {
-          data = axios.post(url, content)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-      return data.data
+  let res: any
+  const baseURl = BaseUrl.returnUrl()
+  try {
+    if (api === 'get') {
+      res = await axios.get(`${baseURl + url}`)
+      callback(res.data)
     }
-
-  return fetch()
+    if (api === 'post') {
+      res = await axios.post(`${baseURl + url}`, content)
+      callback(res.data)
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }

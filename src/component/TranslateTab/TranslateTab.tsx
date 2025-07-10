@@ -3,6 +3,7 @@ import Result from './Result'
 import axios from 'axios'
 import { ResultContext } from '../context/resultProvider'
 import useSelectedText from '../../hook/useSelectedText'
+import { BaseUrl } from '../type/BaseUrl'
 
 export default function TranslateTab() {
   const inputTextRef = useRef<HTMLDivElement>(null)
@@ -26,7 +27,7 @@ export default function TranslateTab() {
     timeOutRef.current = setTimeout(async () => {
       setSearchStatus(true)
       try {
-        const res = await axios.post('https://dictionary-api-server.onrender.com/api/analyze', {
+        const res = await axios.post(`${BaseUrl.returnUrl()}/api/analyze`, {
           // const res = await axios.post('http://192.168.0.102:3003/api/search', {
           content: inputTextRef.current?.innerText,
         })

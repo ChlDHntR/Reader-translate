@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router'
 import BookCard from './BookCard'
+import useApiCall from '../../hook/useApiCall'
 
 function BookSelector() {
   const [bookList, setBookList] = useState<string[]>([])
@@ -9,18 +9,28 @@ function BookSelector() {
   const [fetching, setFetching] = useState(true)
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get('https://dictionary-api-server.onrender.com/api/booklist')
-        if (res.data) {
-          setBookList(res.data.list)
-          setFetching(false)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fetch()
+    // const fetch = async () => {
+    //   try {
+    //     const res = await axios.get('https://dictionary-api-server.onrender.com/api/booklist')
+    //     if (res.data) {
+    //       setBookList(res.data.list)
+    //       setFetching(false)
+    //     }
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // }
+    // fetch()
+
+    useApiCall(
+      'get', 
+      '/api/booklist', 
+      (arg) => {
+        setBookList(arg.list)
+        setFetching(false)
+      } ,
+      null)
+
   }, [])
 
   const handleRedirect = (book: string) => {
