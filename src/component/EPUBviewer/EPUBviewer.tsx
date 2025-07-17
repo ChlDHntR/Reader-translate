@@ -11,6 +11,7 @@ function EpubViewer({ url }: { url: string }) {
   const viewerRef = useRef<HTMLDivElement>(null)
   const bookRef = useRef<any>(null)
   const renditionRef = useRef<any>(null)
+  const tocReady = useRef<boolean>(false)
   const [tocOn, setTocOn] = useState(false)
   const tocDivRef = useRef<HTMLDivElement>(null)
   const { setSelectedText } = useSelectedText()
@@ -27,6 +28,10 @@ function EpubViewer({ url }: { url: string }) {
 
     const book = ePub(url)
     bookRef.current = book
+
+    bookRef.current.ready.then(() => {
+      tocReady.current = true
+    })
 
     let rendition: any = null
 
@@ -45,12 +50,14 @@ function EpubViewer({ url }: { url: string }) {
       rendition.display()
     }
 
-    rendition.on('selected', function (cfiRange: any, contents: any) {
+    const selectEvent = (cfiRange: any, contents: any) => {
       console.log(cfiRange)
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
-    })
+    }
+
+    rendition.on('selected', selectEvent)
 
     rendition.on('relocated', (location: any) => {
       const { displayed, href } = location.start
@@ -68,8 +75,9 @@ function EpubViewer({ url }: { url: string }) {
 
     return () => {
       book.destroy()
+      setSelectedText('')
     }
-  }, [url])
+  }, [])
 
   const handleDisplayToc = () => {
     setTocOn((prev) => !prev)
@@ -101,7 +109,7 @@ function EpubViewer({ url }: { url: string }) {
       className={'flex flex-row overflow-hidden absolute '}
       style={{ left: tocOn ? '0px' : '-160px' }}
     >
-      {bookRef.current && (
+      {tocReady.current && (
         <TOC
           toc={bookRef.current.navigation.toc}
           tocOn={tocOn}
