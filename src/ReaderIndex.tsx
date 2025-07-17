@@ -7,6 +7,7 @@ import EPUBviewer from './component/EPUBviewer/EPUBviewer'
 import useSelectedText from './hook/useSelectedText'
 import { useParams } from 'react-router'
 import { BaseUrl } from './component/type/BaseUrl'
+import FlashMessage from './component/FlashMessage/FlashMessage'
 
 function ReaderIndex() {
   const [transTabOn, setTransTabOn] = useState(false)
@@ -22,6 +23,7 @@ function ReaderIndex() {
 
   return (
     <ResultProvider value={{ result, setResult }}>
+      <FlashMessage />
       <div className='oveflow-hidden' style={{ height: '100vh', direction: 'ltr' }}>
         <div style={{ height: '100vh' }}>
           <div className='relative h-full overflow-hidden '>
