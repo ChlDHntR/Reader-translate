@@ -6,7 +6,7 @@ import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
 import { useNavigate, useParams } from 'react-router'
 
-function EpubReader({ url }: { url: string }) {
+function EpubViewer({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
   const viewerRef = useRef<HTMLDivElement>(null)
   const bookRef = useRef<any>(null)
@@ -22,14 +22,6 @@ function EpubReader({ url }: { url: string }) {
   const { bookName } = useParams()
   const navigate = useNavigate()
 
-  const buttonClassName = 'text-base w-30/100'
-  //const [jumpPage, setJumpPage] = useState('')
-
-  // useEffect(() => {
-  //   if (tocDivRef.current) {
-  //   }
-  // }, [delta])
-
   useEffect(() => {
     if (!viewerRef.current) return
 
@@ -40,13 +32,13 @@ function EpubReader({ url }: { url: string }) {
 
     rendition = book.renderTo(viewerRef.current, {
       width: '100%',
-      height: '100%',
+      height: '600px',
     })
     renditionRef.current = rendition
     rendition.themes.fontSize('100%')
 
     const bookmark = localStorage.getItem(bookName || '')
-    //rendition.display()
+
     if (bookmark) {
       rendition.display(bookmark)
     } else {
@@ -122,7 +114,10 @@ function EpubReader({ url }: { url: string }) {
         {/* Control buttons */}
         <div className='flex mb-2.5 justify-between'>
           <div className='flex flex-row'>
-            <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
+            <HiBars3
+              onClick={handleDisplayToc}
+              className='h-6 w-6 text-blue-400'
+            />
           </div>
           <div
             onClick={() => navigate('/')}
@@ -157,8 +152,11 @@ function EpubReader({ url }: { url: string }) {
         />
 
         {/* Footer info */}
-        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
-          <button onClick={handleNext} className={buttonClassName}>
+        <div
+          style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }}
+          className='flex justify-between'
+        >
+          <button onClick={handleNext} className='text-base w-30/100'>
             ⬅ Next
           </button>
           <div>
@@ -169,7 +167,7 @@ function EpubReader({ url }: { url: string }) {
               Page {pageInfo.page} / {pageInfo.total}
             </div>
           </div>
-          <button onClick={handlePrev} className={buttonClassName}>
+          <button onClick={handlePrev} className='text-base w-30/100'>
             Prev ➡
           </button>
         </div>
@@ -178,4 +176,4 @@ function EpubReader({ url }: { url: string }) {
   )
 }
 
-export default EpubReader
+export default EpubViewer
