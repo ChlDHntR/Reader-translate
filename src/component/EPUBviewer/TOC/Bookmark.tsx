@@ -1,11 +1,13 @@
 import { useParams } from 'react-router'
+import useFlashMessage from '../../../hook/useFlashMessage';
 
 export default function Bookmark({ renditionRef, setTocOn }: { renditionRef: any; setTocOn: any }) {
   const { bookName } = useParams()
-
+  const { setFlashMessage, setSwitchFlashMessage } = useFlashMessage()
   const handleAddBookmark = () => {
     localStorage.setItem(bookName || '', renditionRef.current?.location.start.cfi)
-    alert('Bookmark added')
+    setFlashMessage('Bookmark added')
+    setSwitchFlashMessage(true)
   }
   const handleLoadBookmark = () => {
     let bookmark = localStorage.getItem(bookName || '')
