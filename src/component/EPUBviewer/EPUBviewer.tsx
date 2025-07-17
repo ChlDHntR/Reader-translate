@@ -91,18 +91,6 @@ function EpubViewer({ url }: { url: string }) {
     renditionRef.current?.prev()
   }
 
-  // const handleJump = () => {
-  //   // Use displayed.page
-  //   let renditionAAA = renditionRef.current
-  //   if (renditionAAA.location.start.cfi === jumpPage) {
-  //     return
-  //   }
-  //   renditionRef.current?.display(jumpPage)
-  // }
-
-  //console.log(bookRef.current?.navigation.toc)
-  //console.log(renditionRef.current?.location)
-
   return (
     <div
       ref={viewerWrapperRef}
