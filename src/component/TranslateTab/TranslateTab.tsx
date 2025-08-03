@@ -6,7 +6,7 @@ import useSelectedText from '../../hook/useSelectedText'
 import { BaseUrl } from '../type/BaseUrl'
 
 export default function TranslateTab() {
-  const inputTextRef = useRef<HTMLDivElement>(null)
+  const inputTextRef = useRef<HTMLInputElement>(null)
   const { setResult } = useContext<any>(ResultContext)
   const [searchStatus, setSearchStatus] = useState(false)
   const timeOutRef = useRef<NodeJS.Timeout | null>(null)
@@ -19,7 +19,7 @@ export default function TranslateTab() {
       clearTimeout(timeOutRef.current)
     }
 
-    if (!inputTextRef.current?.innerText) {
+    if (!inputTextRef.current?.value) {
       setAnalText({ analyze: [] })
       setResult(null)
       return
@@ -28,8 +28,7 @@ export default function TranslateTab() {
       setSearchStatus(true)
       try {
         const res = await axios.post(`${BaseUrl.returnUrl()}/api/analyze`, {
-          // const res = await axios.post('http://192.168.0.102:3003/api/search', {
-          content: inputTextRef.current?.innerText,
+          content: inputTextRef.current?.value,
         })
         if (res.data === 'no result found') {
           setResult(null)
@@ -48,7 +47,7 @@ export default function TranslateTab() {
 
   useEffect(() => {
     if (inputTextRef.current) {
-      inputTextRef.current.innerText = selectedText
+      inputTextRef.current.value = selectedText
       analIndexRef.current = 0
       handleAnalyzeText()
     }
@@ -57,16 +56,16 @@ export default function TranslateTab() {
   return (
     <>
       <div className='bg-gray-100 w-screen p-2 flex flex-col'>
-        <div
+        <input
           ref={inputTextRef}
           contentEditable='true'
           className='text-lg bg-white border border-black rounded-md pl-0.5'
-          onInput={handleAnalyzeText}
-        ></div>
-        <div className='mt-1 h-7'>
+          onChange={handleAnalyzeText}
+        ></input>
+        <div className='mt-1 h-full text-nowrap'>
           {analText.analyze.map((item: any, index: number) => (
-            <button
-              className={`bg-green-600 rounded-2xl pl-1 pr-1 mr-1 ${
+            <p
+              className={`bg-green-600 rounded-2xl pl-1 pr-1 mr-1 pb-0.5 inline ${
                 index === analIndexRef.current ? 'text-white' : ''
               }`}
               key={index}
@@ -78,7 +77,7 @@ export default function TranslateTab() {
             >
               {' '}
               {item.surface_form}{' '}
-            </button>
+            </p>
           ))}
         </div>
         <Result searchStatus={searchStatus} />
