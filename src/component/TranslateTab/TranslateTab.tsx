@@ -65,7 +65,7 @@ export default function TranslateTab() {
         <div className='mt-1 h-7 text-nowrap'>
           {analText.analyze.map((item: any, index: number) => (
             <p
-              className={`bg-green-600 rounded-2xl pl-1 pr-1 mr-1 pb-0.5 inline ${
+              className={`bg-green-600 rounded-2xl pl-1 pr-0.5 mr-0.5 pb-0.5 pt-0.5 inline ${
                 index === analIndexRef.current ? 'text-white' : ''
               }`}
               key={index}
@@ -75,7 +75,6 @@ export default function TranslateTab() {
                 setResult(analText.runReader[index])
               }}
             >
-              {' '}
               {item.surface_form}{' '}
             </p>
           ))}
