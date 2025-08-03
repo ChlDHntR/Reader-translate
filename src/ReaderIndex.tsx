@@ -9,12 +9,13 @@ import { useParams } from 'react-router'
 
 function ReaderIndex() {
   const [transTabOn, setTransTabOn] = useState(false)
+  const [autoPull, setAutoPull] = useState(true)
   const [result, setResult] = useState<any>(null)
   const { selectedText } = useSelectedText()
   const { bookName } = useParams()
 
   useEffect(() => {
-    if (selectedText.length > 0) {
+    if (selectedText.length > 0 && autoPull) {
       setTransTabOn(true)
     }
   }, [selectedText])
@@ -34,12 +35,23 @@ function ReaderIndex() {
           <div className='flex flex-row'>
             <div
               id='puller'
-              className='w-16 h-6 bg-gray-400 rounded-t-lg cursor-pointer ml-1 text-sm text-center'
+              className='w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center text-white'
               onClick={() => {
                 setTransTabOn(!transTabOn)
               }}
             >
               {transTabOn ? 'DOWN' : 'UP'}
+            </div>
+            <div
+              id='puller'
+              className={`w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center ${
+                autoPull ? 'text-green-400' : 'text-red-500'
+              }`}
+              onClick={() => {
+                setAutoPull(!autoPull)
+              }}
+            >
+              {autoPull ? 'On' : 'Off'}
             </div>
           </div>
           <TranslateTab />
