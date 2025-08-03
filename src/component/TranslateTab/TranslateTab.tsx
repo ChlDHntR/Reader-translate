@@ -62,7 +62,7 @@ export default function TranslateTab() {
           className='text-lg bg-white border border-black rounded-md pl-0.5'
           onChange={handleAnalyzeText}
         ></input>
-        <div className='mt-1 h-full text-nowrap'>
+        <div className='mt-1 h-7 text-nowrap'>
           {analText.analyze.map((item: any, index: number) => (
             <p
               className={`bg-green-600 rounded-2xl pl-1 pr-1 mr-1 pb-0.5 inline ${
