@@ -23,14 +23,14 @@ function BookSelector() {
     // fetch()
 
     useApiCall(
-      'get', 
-      '/api/booklist', 
+      'get',
+      '/api/booklist',
       (arg) => {
         setBookList(arg.list)
         setFetching(false)
-      } ,
-      null)
-
+      },
+      null
+    )
   }, [])
 
   const handleRedirect = (book: string) => {

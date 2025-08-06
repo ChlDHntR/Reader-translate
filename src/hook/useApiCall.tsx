@@ -1,12 +1,7 @@
 import axios from 'axios'
 import { BaseUrl } from '../component/type/BaseUrl'
 
-export default async function useApiCall(
-  api: string,
-  url: string,
-  callback: (arg: any) => void,
-  content: null | any
-) {
+export default async function useApiCall(api: string, url: string, callback: (arg: any) => void, content: null | any) {
   let res: any
   const baseURl = BaseUrl.returnUrl()
   try {

@@ -24,7 +24,7 @@ export default function Bookmark({ renditionRef, setTocOn }: { renditionRef: any
   }
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 w-9/10 pl-2'>
       <h1 className='text-2xl font-bold'>Bookmark</h1>
       <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={handleAddBookmark}>
         Add Bookmark
