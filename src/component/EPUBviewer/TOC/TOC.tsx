@@ -6,6 +6,7 @@ export default function TOC({
   renditionRef,
   tocDivRef,
   setTocOn,
+  tocOn,
 }: {
   toc: Toc[]
   tocOn: boolean
@@ -20,8 +21,12 @@ export default function TOC({
   //console.log(toc[2].href.split('#')[0])
 
   return (
-    <div id='tocDiv' ref={tocDivRef} className={'top-0 left-0 min-w-40 h-full bg-white z-50 relative '}>
-      <div className='flex flex-col overflow-y-auto h-full'>
+    <div
+      id='tocDiv'
+      ref={tocDivRef}
+      className={`top-0 left-0 w-40 h-full bg-gray-200 relative ${tocOn ? 'z-150' : 'z-50'}`}
+    >
+      <div className='flex flex-col overflow-y-auto'>
         <div className='flex flex-row justify-between items-center p-2 bg-gray-200'>
           <h1 className='text-lg font-bold'>Table of Contents</h1>
         </div>
