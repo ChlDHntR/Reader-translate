@@ -23,16 +23,6 @@ function EpubReader({ url }: { url: string }) {
   const { bookName } = useParams()
   const navigate = useNavigate()
 
-  const buttonClassName = 'text-base w-30/100'
-  //const [jumpPage, setJumpPage] = useState('')
-
-  // useEffect(() => {
-  //   if (tocDivRef.current) {
-  //   }
-  // }, [delta])
-
-  //console.log(tocReady.current)
-
   useEffect(() => {
     if (!viewerRef.current) return
 
@@ -47,11 +37,18 @@ function EpubReader({ url }: { url: string }) {
 
     rendition = book.renderTo(viewerRef.current, {
       width: '100%',
-      height: '100%',
+      height: '600px',
     })
-    renditionRef.current = rendition
-    rendition.themes.fontSize('100%')
 
+    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+    if (isiOS) {
+      rendition.themes.fontSize('12px')
+    } else {
+      rendition.themes.fontSize('1em')
+    }
+
+    renditionRef.current = rendition
     const bookmark = localStorage.getItem(bookName || '')
     //rendition.display()
     if (bookmark) {
@@ -101,37 +98,27 @@ function EpubReader({ url }: { url: string }) {
     renditionRef.current?.prev()
   }
 
-  // const handleJump = () => {
-  //   // Use displayed.page
-  //   let renditionAAA = renditionRef.current
-  //   if (renditionAAA.location.start.cfi === jumpPage) {
-  //     return
-  //   }
-  //   renditionRef.current?.display(jumpPage)
-  // }
-
-  //console.log(bookRef.current?.navigation.toc)
-  //console.log(renditionRef.current?.location)
-
   return (
-    <div
-      ref={viewerWrapperRef}
-      className={'flex flex-row overflow-hidden absolute '}
-      style={{ left: tocOn ? '0px' : '-160px' }}
-    >
+    <div ref={viewerWrapperRef} className={'flex flex-row overflow-hidden absolute '}>
+      {/*Table of content*/}
       {tocReady.current && (
-        <TOC
-          toc={bookRef.current.navigation.toc}
-          tocOn={tocOn}
-          renditionRef={renditionRef}
-          tocDivRef={tocDivRef}
-          setTocOn={setTocOn}
-        />
+        <div className='absolute h-full transition-all delay-50' style={{ left: tocOn ? '0px' : '-160px' }}>
+          <TOC
+            toc={bookRef.current.navigation.toc}
+            tocOn={tocOn}
+            renditionRef={renditionRef}
+            tocDivRef={tocDivRef}
+            setTocOn={setTocOn}
+          />
+        </div>
       )}
-      <div className='h-screen min-w-screen  p-3'>
+      <div className={`h-screen w-screen p-3`}>
         {/* Control buttons */}
-        <div className='flex mb-2.5 justify-between'>
-          <div className='flex flex-row'>
+        <div className='flex mb-2.5 justify-end'>
+          <div
+            className='flex flex-row absolute pl-3 transition-all delay-50'
+            style={{ left: tocOn ? '160px' : '0px' }}
+          >
             <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
           </div>
           <div
@@ -140,19 +127,6 @@ function EpubReader({ url }: { url: string }) {
           >
             <p>CHANGE BOOK</p>
           </div>
-
-          {/* Jump to page */}
-          {/* <div>
-            <input
-              type='text'
-              value={jumpPage}
-              disabled={false}
-              onChange={(e) => setJumpPage(e.target.value)}
-              placeholder='Page number'
-              style={{ width: 80, marginRight: 5 }}
-            />
-            <button onClick={handleJump}>Go</button>
-          </div> */}
         </div>
 
         {/* Reader viewport */}
@@ -168,7 +142,7 @@ function EpubReader({ url }: { url: string }) {
 
         {/* Footer info */}
         <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
-          <button onClick={handleNext} className={buttonClassName}>
+          <button onClick={handleNext} className={'text-base w-30/100'}>
             ⬅ Next
           </button>
           <div>
@@ -179,7 +153,7 @@ function EpubReader({ url }: { url: string }) {
               Page {pageInfo.page} / {pageInfo.total}
             </div>
           </div>
-          <button onClick={handlePrev} className={buttonClassName}>
+          <button onClick={handlePrev} className={'text-base w-30/100'}>
             Prev ➡
           </button>
         </div>
