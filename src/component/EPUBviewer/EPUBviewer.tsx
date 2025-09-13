@@ -5,6 +5,7 @@ import TOC from './TOC/TOC'
 import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
 import { useNavigate, useParams } from 'react-router'
+import * as cowsay from 'cowsay'
 
 function EpubReader({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
@@ -58,7 +59,7 @@ function EpubReader({ url }: { url: string }) {
     }
 
     const selectEvent = (cfiRange: any, contents: any) => {
-      console.log(cfiRange)
+      console.log(cowsay.say({ text: cfiRange }))
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
