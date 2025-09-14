@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ResultContext } from '../context/resultProvider'
 import useSelectedText from '../../hook/useSelectedText'
 import { BaseUrl } from '../type/BaseUrl'
+import useThemeChanger from '../../hook/useThemeChanger'
 
 export default function TranslateTab() {
   const inputTextRef = useRef<HTMLInputElement>(null)
@@ -13,6 +14,7 @@ export default function TranslateTab() {
   const { selectedText } = useSelectedText()
   const [analText, setAnalText] = useState<any>({ analyze: [] })
   const analIndexRef = useRef<number>(0)
+  const { darkTheme } = useThemeChanger()
 
   const handleAnalyzeText = () => {
     if (timeOutRef.current) {
@@ -55,11 +57,11 @@ export default function TranslateTab() {
 
   return (
     <>
-      <div className='bg-gray-100 w-screen p-2 flex flex-col'>
+      <div className={`w-screen p-2 flex flex-col ${darkTheme ? 'bg-[#393E46]' : 'bg-gray-100'}`}>
         <input
           ref={inputTextRef}
           contentEditable='true'
-          className='text-lg bg-white border border-black rounded-md pl-0.5'
+          className='text-lg bg-white border border-black rounded-md pl-0.5 text-black'
           onChange={handleAnalyzeText}
         ></input>
         <div className='mt-1 h-7 text-nowrap'>

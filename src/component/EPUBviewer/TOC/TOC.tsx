@@ -1,5 +1,6 @@
 import { Toc } from '../../type/typeDefi'
 import Bookmark from './Bookmark'
+import useThemeChanger from '../../../hook/useThemeChanger'
 
 export default function TOC({
   toc,
@@ -18,16 +19,18 @@ export default function TOC({
   //     setForceRender(tocDivRef.current.getBoundingClientRect().width)
   //   }, [])
   const currentPos = renditionRef.current?.location.start.href
-  //console.log(toc[2].href.split('#')[0])
+  const { darkTheme } = useThemeChanger()
 
   return (
     <div
       id='tocDiv'
       ref={tocDivRef}
-      className={`top-0 left-0 w-40 h-full bg-gray-200 relative ${tocOn ? 'z-150' : 'z-50'}`}
+      className={`top-0 left-0 w-40 h-full ${darkTheme ? 'bg-[#393E46] ' : 'bg-gray-200 '} relative ${
+        tocOn ? 'z-150' : 'z-50'
+      }`}
     >
       <div className='flex flex-col overflow-y-auto'>
-        <div className='flex flex-row justify-between items-center p-2 bg-gray-200'>
+        <div className='flex flex-row justify-between items-center p-2'>
           <h1 className='text-lg font-bold'>Table of Contents</h1>
         </div>
         <ul className='p-1 h-72 overflow-y-scroll'>
@@ -38,9 +41,7 @@ export default function TOC({
                   setTocOn(false)
                   renditionRef.current?.display(item.href)
                 }}
-                className={`${
-                  currentPos === item.href.split('#')[0] ? 'text-black' : 'text-blue-500'
-                } text-xs hover:underline`}
+                className={`${currentPos === item.href.split('#')[0] ? '' : 'text-blue-500'} text-xs hover:underline`}
               >
                 {item.label}
               </a>
