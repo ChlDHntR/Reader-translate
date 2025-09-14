@@ -4,10 +4,12 @@ import TranslateTab from './component/TranslateTab/TranslateTab'
 import ResultProvider from './component/context/resultProvider'
 import 'regenerator-runtime'
 import EPUBviewer from './component/EPUBviewer/EPUBviewer'
+import ThemeWrapper from './component/UI/themeWrapper'
 import useSelectedText from './hook/useSelectedText'
 import { useParams } from 'react-router'
 import { BaseUrl } from './component/type/BaseUrl'
 import FlashMessage from './component/FlashMessage/FlashMessage'
+
 
 function ReaderIndex() {
   const [transTabOn, setTransTabOn] = useState(false)
@@ -25,6 +27,7 @@ function ReaderIndex() {
   return (
     <ResultProvider value={{ result, setResult }}>
       <FlashMessage />
+      <ThemeWrapper>
       <div className='oveflow-hidden' style={{ height: '100vh', direction: 'ltr' }}>
         <div style={{ height: '100vh' }}>
           <div className='relative h-full overflow-hidden '>
@@ -45,21 +48,37 @@ function ReaderIndex() {
             >
               {transTabOn ? 'DOWN' : 'UP'}
             </div>
-            <div
-              id='puller'
-              className={`w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center ${
-                autoPull ? 'text-green-400' : 'text-red-500'
-              }`}
-              onClick={() => {
-                setAutoPull(!autoPull)
-              }}
-            >
-              {autoPull ? 'On' : 'Off'}
-            </div>
           </div>
-          <TranslateTab />
+          <div
+            id='TranslateTab-container'
+            className={'z-100 fixed left-0 transition-all ' + (transTabOn ? ' bottom-0' : ' -bottom-68')}
+          >
+            <div className='flex flex-row'>
+              <div
+                id='puller'
+                className='w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center text-white'
+                onClick={() => {
+                  setTransTabOn(!transTabOn)
+                }}
+              >
+                {transTabOn ? 'DOWN' : 'UP'}
+              </div>
+              <div
+                id='puller'
+                className={`w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center ${
+                  autoPull ? 'text-green-400' : 'text-red-500'
+                }`}
+                onClick={() => {
+                  setAutoPull(!autoPull)
+                }}
+              >
+                {autoPull ? 'On' : 'Off'}
+              </div>
+            </div>
+            <TranslateTab />
+          </div>
         </div>
-      </div>
+      </ThemeWrapper>
     </ResultProvider>
   )
 }

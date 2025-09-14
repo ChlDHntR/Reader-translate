@@ -5,6 +5,9 @@ import TOC from './TOC/TOC'
 import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
 import { useNavigate, useParams } from 'react-router'
+import SlideBtn from './UI/SlideBtn'
+import * as cowsay from 'cowsay'
+import useThemeChanger from '../../hook/useThemeChanger'
 
 function EpubViewer({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
@@ -15,6 +18,7 @@ function EpubViewer({ url }: { url: string }) {
   const [tocOn, setTocOn] = useState(false)
   const tocDivRef = useRef<HTMLDivElement>(null)
   const { setSelectedText } = useSelectedText()
+  const { darkTheme } = useThemeChanger()
   const [pageInfo, setPageInfo] = useState({
     page: 0,
     total: 0,
@@ -48,7 +52,15 @@ function EpubViewer({ url }: { url: string }) {
       rendition.themes.fontSize('1em')
     }
 
+    rendition.themes.default({
+      body: {
+        '-webkit-text-size-adjust': '100% !important;',
+        'text-size-adjust': '100% !important',
+      },
+    })
+
     renditionRef.current = rendition
+
     const bookmark = localStorage.getItem(bookName || '')
 
     if (bookmark) {
@@ -58,7 +70,7 @@ function EpubViewer({ url }: { url: string }) {
     }
 
     const selectEvent = (cfiRange: any, contents: any) => {
-      console.log(cfiRange)
+      console.log(cowsay.say({ text: cfiRange }))
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
@@ -80,11 +92,24 @@ function EpubViewer({ url }: { url: string }) {
       })
     })
 
+    cowsay.say({ text: 'run' })
+
     return () => {
       book.destroy()
       setSelectedText('')
     }
   }, [])
+
+  useEffect(() => {
+    if (darkTheme) {
+      renditionRef.current.themes.register('dark-theme', {
+        body: {
+          color: `#E8E8E8`,
+        },
+      })
+      renditionRef.current.themes.select('dark-theme')
+    }
+  }, [darkTheme])
 
   const handleDisplayToc = () => {
     setTocOn((prev) => !prev)
@@ -122,6 +147,11 @@ function EpubViewer({ url }: { url: string }) {
             <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
 
           </div>
+
+          <div className='mr-1'>
+            <SlideBtn />
+          </div>
+
           <div
             onClick={() => navigate('/')}
             className='flex flex-row items-center text-white bg-blue-500 rounded-lg pl-0.5 pr-1 cursor-pointer'
@@ -138,13 +168,17 @@ function EpubViewer({ url }: { url: string }) {
             height: '85%',
             border: '1px solid #ccc',
             overflow: 'scroll',
+            color: 'white',
           }}
         />
 
         {/* Footer info */}
         <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
-          <button onClick={handleNext} className={'text-base w-30/100'}>
-            ⬅ Next
+          <button
+            onClick={handleNext}
+            className={'text-base w-30/100 active:opacity-5 transition transform duration-150'}
+          >
+            {'<<'} Next
           </button>
           <div>
             <div>
@@ -154,8 +188,11 @@ function EpubViewer({ url }: { url: string }) {
               Page {pageInfo.page} / {pageInfo.total}
             </div>
           </div>
-          <button onClick={handlePrev} className={'text-base w-30/100'}>
-            Prev ➡
+          <button
+            onClick={handlePrev}
+            className={'text-base w-30/100 active:opacity-5 transition transform duration-150'}
+          >
+            Prev {'>>'}
           </button>
         </div>
       </div>
