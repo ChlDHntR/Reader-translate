@@ -9,7 +9,7 @@ import SlideBtn from './UI/SlideBtn'
 import * as cowsay from 'cowsay'
 import useThemeChanger from '../../hook/useThemeChanger'
 
-function EpubReader({ url }: { url: string }) {
+function EpubViewer({ url }: { url: string }) {
   const viewerWrapperRef = useRef<HTMLDivElement>(null)
   const viewerRef = useRef<HTMLDivElement>(null)
   const bookRef = useRef<any>(null)
@@ -62,7 +62,7 @@ function EpubReader({ url }: { url: string }) {
     renditionRef.current = rendition
 
     const bookmark = localStorage.getItem(bookName || '')
-    //rendition.display()
+
     if (bookmark) {
       rendition.display(bookmark)
     } else {
@@ -145,6 +145,7 @@ function EpubReader({ url }: { url: string }) {
             style={{ left: tocOn ? '160px' : '0px' }}
           >
             <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
+
           </div>
 
           <div className='mr-1'>
@@ -199,4 +200,4 @@ function EpubReader({ url }: { url: string }) {
   )
 }
 
-export default EpubReader
+export default EpubViewer
