@@ -4,11 +4,14 @@ import useFlashMessage from '../../../hook/useFlashMessage';
 export default function Bookmark({ renditionRef, setTocOn }: { renditionRef: any; setTocOn: any }) {
   const { bookName } = useParams()
   const { setFlashMessage, setSwitchFlashMessage } = useFlashMessage()
+  
   const handleAddBookmark = () => {
     localStorage.setItem(bookName || '', renditionRef.current?.location.start.cfi)
     setFlashMessage('Bookmark added')
     setSwitchFlashMessage(true)
+    setTocOn(false)
   }
+  
   const handleLoadBookmark = () => {
     let bookmark = localStorage.getItem(bookName || '')
     if (!bookmark) {
