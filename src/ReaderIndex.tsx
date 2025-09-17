@@ -39,7 +39,7 @@ function ReaderIndex() {
             <div className='flex flex-row'>
               <div
                 id='puller'
-                className='w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center text-white'
+                className='w-16 h-6 bg-black-300 rounded-t-lg cursor-pointer ml-1 text-sm text-center text-white'
                 onClick={() => {
                   setTransTabOn(!transTabOn)
                 }}
