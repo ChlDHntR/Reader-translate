@@ -28,30 +28,37 @@ function EpubViewer({ url }: { url: string }) {
   const navigate = useNavigate()
 
   useEffect(() => {
+    let rendition: any = null
+    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+  
     if (!viewerRef.current) return
 
     const book = ePub(url)
+    
     bookRef.current = book
-
     bookRef.current.ready.then(() => {
       tocReady.current = true
     })
 
-    let rendition: any = null
 
     rendition = book.renderTo(viewerRef.current, {
       width: '100%',
       height: '600px',
     })
 
-    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
     if (isiOS) {
       rendition.themes.fontSize('12px')
     } else {
       rendition.themes.fontSize('1em')
     }
+    
 
+    /*
+      this help avoid text resizing 
+      on android when keyboard is displayed
+      which mess up current rendered rendition
+    */
     rendition.themes.default({
       body: {
         '-webkit-text-size-adjust': '100% !important;',
@@ -70,7 +77,7 @@ function EpubViewer({ url }: { url: string }) {
     }
 
     const selectEvent = (cfiRange: any, contents: any) => {
-      console.log(cowsay.say({ text: cfiRange }))
+      console.log(cfiRange)
       const selection = contents.window.getSelection()
       const selectedText = selection.toString()
       setSelectedText(selectedText)
@@ -117,6 +124,7 @@ function EpubViewer({ url }: { url: string }) {
 
   const handleNext = () => {
     renditionRef.current?.next()
+    localStorage.setItem(bookName || '', renditionRef.current?.location.start.cfi)
   }
 
   const handlePrev = () => {

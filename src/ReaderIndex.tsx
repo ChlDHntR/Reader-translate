@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import TranslateTab from './component/TranslateTab/TranslateTab'
 import ResultProvider from './component/context/resultProvider'
-import 'regenerator-runtime'
 import EPUBviewer from './component/EPUBviewer/EPUBviewer'
 import ThemeWrapper from './component/UI/ThemeWrapper'
 import useSelectedText from './hook/useSelectedText'
@@ -37,21 +36,6 @@ function ReaderIndex() {
             id='TranslateTab-container'
             className={'z-100 fixed left-0 transition-all ' + (transTabOn ? ' bottom-0' : ' -bottom-68')}
           >
-            <div className='flex flex-row'>
-              <div
-                id='puller'
-                className='w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center text-white'
-                onClick={() => {
-                  setTransTabOn(!transTabOn)
-                }}
-              >
-                {transTabOn ? 'DOWN' : 'UP'}
-              </div>
-            </div>
-            <div
-              id='TranslateTab-container'
-              className={'z-100 fixed left-0 transition-all ' + (transTabOn ? ' bottom-0' : ' -bottom-68')}
-            >
               <div className='flex flex-row'>
                 <div
                   id='puller'
@@ -63,7 +47,6 @@ function ReaderIndex() {
                   {transTabOn ? 'DOWN' : 'UP'}
                 </div>
                 <div
-                  id='puller'
                   className={`w-16 h-6 bg-blue-500 rounded-t-lg cursor-pointer ml-1 text-sm text-center ${
                     autoPull ? 'text-green-400' : 'text-red-500'
                   }`}
@@ -77,7 +60,6 @@ function ReaderIndex() {
               <TranslateTab />
             </div>
           </div>
-        </div>
       </ThemeWrapper>
     </ResultProvider>
   )
