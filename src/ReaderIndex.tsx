@@ -8,6 +8,7 @@ import useSelectedText from './hook/useSelectedText'
 import { useParams } from 'react-router'
 import { BaseUrl } from './component/type/BaseUrl'
 import FlashMessage from './component/FlashMessage/FlashMessage'
+import ErrorBoundary from './component/errorBoundary/ErrorBoundary'
 
 function ReaderIndex() {
   const [transTabOn, setTransTabOn] = useState(false)
@@ -57,7 +58,9 @@ function ReaderIndex() {
                   {autoPull ? 'On' : 'Off'}
                 </div>
               </div>
-              <TranslateTab />
+              <ErrorBoundary fallback={'unknown error'}>
+                <TranslateTab />
+              </ErrorBoundary>
             </div>
           </div>
       </ThemeWrapper>
