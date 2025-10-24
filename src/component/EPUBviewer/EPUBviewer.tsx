@@ -118,6 +118,24 @@ function EpubViewer({ url }: { url: string }) {
     }
   }, [darkTheme])
 
+  useEffect(() => { 
+    const keyPress = (e: any) => {
+      if (!tocReady.current) return
+      
+      if (e.key === 'ArrowLeft') {
+        handleNext()
+      }
+      if (e.key === 'ArrowRight') {
+        handlePrev()
+      }
+    }
+    window.addEventListener('keydown', keyPress)
+
+    return () => {
+      window.removeEventListener('keydown', keyPress)
+    }
+  }, [])
+
   const handleDisplayToc = () => {
     setTocOn((prev) => !prev)
   }
@@ -157,7 +175,7 @@ function EpubViewer({ url }: { url: string }) {
           </div>
 
           <div className='mr-1'>
-            <SlideBtn />
+            <SlideBtn renditionRef={renditionRef}/>
           </div>
 
           <div
