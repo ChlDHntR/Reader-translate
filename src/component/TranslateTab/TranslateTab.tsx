@@ -42,6 +42,8 @@ export default function TranslateTab() {
         setResult(res.data.runReader[analIndexRef.current])
       } catch (err) {
         console.error(err)
+        //setResult(null)
+        //setAnalText({ analyze: [] })
       }
       setSearchStatus(false)
     }, 300)
