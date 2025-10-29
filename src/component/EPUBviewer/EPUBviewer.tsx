@@ -6,7 +6,6 @@ import { HiBars3 } from 'react-icons/hi2'
 import useSelectedText from '../../hook/useSelectedText'
 import { useNavigate, useParams } from 'react-router'
 import SlideBtn from './UI/SlideBtn'
-import * as cowsay from 'cowsay'
 import useThemeChanger from '../../hook/useThemeChanger'
 
 function EpubViewer({ url }: { url: string }) {
@@ -30,29 +29,27 @@ function EpubViewer({ url }: { url: string }) {
   useEffect(() => {
     let rendition: any = null
     const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-  
+
     if (!viewerRef.current) return
 
     const book = ePub(url)
-    
+
     bookRef.current = book
+
     bookRef.current.ready.then(() => {
       tocReady.current = true
     })
-
 
     rendition = book.renderTo(viewerRef.current, {
       width: '100%',
       height: '600px',
     })
 
-
     if (isiOS) {
       rendition.themes.fontSize('12px')
     } else {
       rendition.themes.fontSize('1em')
     }
-    
 
     /*
       this help avoid text resizing 
@@ -63,6 +60,18 @@ function EpubViewer({ url }: { url: string }) {
       body: {
         '-webkit-text-size-adjust': '100% !important;',
         'text-size-adjust': '100% !important',
+      },
+      ruby: {
+        display: 'inline-block !important',
+        position: 'relative',
+      },
+      rt: {
+      },
+    })
+
+    rendition.themes.register('dark-theme', {
+      body: {
+        color: `#E8E8E8`,
       },
     })
 
@@ -99,8 +108,6 @@ function EpubViewer({ url }: { url: string }) {
       })
     })
 
-    cowsay.say({ text: 'run' })
-
     return () => {
       book.destroy()
       setSelectedText('')
@@ -108,20 +115,21 @@ function EpubViewer({ url }: { url: string }) {
   }, [])
 
   useEffect(() => {
-    if (darkTheme) {
+    if (darkTheme && renditionRef.current) {
       renditionRef.current.themes.register('dark-theme', {
         body: {
           color: `#E8E8E8`,
         },
       })
+
       renditionRef.current.themes.select('dark-theme')
     }
   }, [darkTheme])
 
-  useEffect(() => { 
+  useEffect(() => {
     const keyPress = (e: any) => {
       if (!tocReady.current) return
-      
+
       if (e.key === 'ArrowLeft') {
         handleNext()
       }
@@ -142,7 +150,10 @@ function EpubViewer({ url }: { url: string }) {
 
   const handleNext = () => {
     renditionRef.current?.next()
-    localStorage.setItem(bookName || '', renditionRef.current?.location.start.cfi)
+    localStorage.setItem(
+      bookName || '',
+      renditionRef.current?.location.start.cfi
+    )
   }
 
   const handlePrev = () => {
@@ -150,10 +161,16 @@ function EpubViewer({ url }: { url: string }) {
   }
 
   return (
-    <div ref={viewerWrapperRef} className={'flex flex-row overflow-hidden absolute '}>
+    <div
+      ref={viewerWrapperRef}
+      className={'flex flex-row overflow-hidden absolute '}
+    >
       {/*Table of content*/}
       {tocReady.current && (
-        <div className='absolute h-full transition-all delay-50' style={{ left: tocOn ? '0px' : '-160px' }}>
+        <div
+          className="absolute h-full transition-all delay-50"
+          style={{ left: tocOn ? '0px' : '-160px' }}
+        >
           <TOC
             toc={bookRef.current.navigation.toc}
             tocOn={tocOn}
@@ -165,22 +182,24 @@ function EpubViewer({ url }: { url: string }) {
       )}
       <div className={`h-screen w-screen p-3`}>
         {/* Control buttons */}
-        <div className='flex mb-2.5 justify-end'>
+        <div className="flex mb-2.5 justify-end">
           <div
-            className='flex flex-row absolute pl-3 transition-all delay-50'
+            className="flex flex-row absolute pl-3 transition-all delay-50"
             style={{ left: tocOn ? '160px' : '0px' }}
           >
-            <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
-
+            <HiBars3
+              onClick={handleDisplayToc}
+              className="h-6 w-6 text-blue-400"
+            />
           </div>
 
-          <div className='mr-1'>
-            <SlideBtn renditionRef={renditionRef}/>
+          <div className="mr-1">
+            <SlideBtn renditionRef={renditionRef} />
           </div>
 
           <div
             onClick={() => navigate('/')}
-            className='flex flex-row items-center text-white bg-blue-500 rounded-lg pl-0.5 pr-1 cursor-pointer'
+            className="flex flex-row items-center text-white bg-blue-500 rounded-lg pl-0.5 pr-1 cursor-pointer"
           >
             <p>CHANGE BOOK</p>
           </div>
@@ -199,10 +218,15 @@ function EpubViewer({ url }: { url: string }) {
         />
 
         {/* Footer info */}
-        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
+        <div
+          style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }}
+          className="flex justify-between"
+        >
           <button
             onClick={handleNext}
-            className={'text-base w-30/100 active:opacity-5 transition transform duration-150'}
+            className={
+              'text-base w-30/100 active:opacity-5 transition transform duration-150'
+            }
           >
             {'<<'} Next
           </button>
@@ -216,7 +240,9 @@ function EpubViewer({ url }: { url: string }) {
           </div>
           <button
             onClick={handlePrev}
-            className={'text-base w-30/100 active:opacity-5 transition transform duration-150'}
+            className={
+              'text-base w-30/100 active:opacity-5 transition transform duration-150'
+            }
           >
             Prev {'>>'}
           </button>
