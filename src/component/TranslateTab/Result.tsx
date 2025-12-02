@@ -12,7 +12,6 @@ export default function Result({ searchStatus }: { searchStatus: boolean }) {
   useEffect(() => {
     let newResult = new ResultClass(result)
     setFormatResult(newResult)
-    console.log(result, newResult.status)
   }, [result])
 
   return (
