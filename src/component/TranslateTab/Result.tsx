@@ -7,8 +7,8 @@ import ResultMonoLang from './ResultMonoLang'
 
 export default function Result({ searchStatus }: { searchStatus: boolean }) {
   const { result } = useContext<any>(ResultContext)
-  const [ formatResult, setFormatResult ] = useState(new ResultClass(result))
-  
+  const [formatResult, setFormatResult] = useState(new ResultClass(result))
+
   useEffect(() => {
     let newResult = new ResultClass(result)
     setFormatResult(newResult)
@@ -17,7 +17,7 @@ export default function Result({ searchStatus }: { searchStatus: boolean }) {
   return (
     <div className={`h-50 ${result === null ? 'text-center flex justify-center items-center' : ''} overflow-auto`}>
       {searchStatus && <p>Searching...</p>}
-      {(formatResult.answer !== null) && !searchStatus ? (
+      {formatResult.answer !== null && !searchStatus && formatResult.status ? (
         <>
           {formatResult.answer.map((item: any, index: number) => (
             <div key={index}>
