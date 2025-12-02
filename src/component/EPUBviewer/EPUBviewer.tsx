@@ -28,7 +28,7 @@ function EpubViewer({ url }: { url: string }) {
 
   useEffect(() => {
     let rendition: any = null
-    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const isiOS = /iPad|iPhone/.test(navigator.userAgent)
 
     if (!viewerRef.current) return
 
@@ -65,14 +65,36 @@ function EpubViewer({ url }: { url: string }) {
         display: 'inline-block !important',
         position: 'relative',
       },
-      rt: {
-      },
+      rt: {},
     })
 
     rendition.themes.register('dark-theme', {
       body: {
         color: `#E8E8E8`,
       },
+    })
+
+    rendition.hooks.content.register((contents: any) => {
+      const doc = contents.document
+      let touchStartX: number = 0
+      let touchEndX: number = 0
+
+      doc.addEventListener('touchstart', (e: any) => {
+        touchStartX = e.changedTouches[0].clientX
+      })
+
+      doc.addEventListener('touchend', (e: any) => {
+        touchEndX = e.changedTouches[0].clientX
+
+        const diff: number = touchStartX - touchEndX
+        const minDist: number = 80
+
+        if (diff > minDist) {
+          handlePrev()
+        } else if (diff < -minDist) {
+          handleNext()
+        }
+      })
     })
 
     renditionRef.current = rendition
@@ -127,6 +149,9 @@ function EpubViewer({ url }: { url: string }) {
   }, [darkTheme])
 
   useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    if (isMobile) return
+
     const keyPress = (e: any) => {
       if (!tocReady.current) return
 
@@ -150,10 +175,7 @@ function EpubViewer({ url }: { url: string }) {
 
   const handleNext = () => {
     renditionRef.current?.next()
-    localStorage.setItem(
-      bookName || '',
-      renditionRef.current?.location.start.cfi
-    )
+    localStorage.setItem(bookName || '', renditionRef.current?.location.start.cfi)
   }
 
   const handlePrev = () => {
@@ -161,16 +183,10 @@ function EpubViewer({ url }: { url: string }) {
   }
 
   return (
-    <div
-      ref={viewerWrapperRef}
-      className={'flex flex-row overflow-hidden absolute '}
-    >
+    <div ref={viewerWrapperRef} className={'flex flex-row overflow-hidden absolute '}>
       {/*Table of content*/}
       {tocReady.current && (
-        <div
-          className="absolute h-full transition-all delay-50"
-          style={{ left: tocOn ? '0px' : '-160px' }}
-        >
+        <div className='absolute h-full transition-all delay-50' style={{ left: tocOn ? '0px' : '-160px' }}>
           <TOC
             toc={bookRef.current.navigation.toc}
             tocOn={tocOn}
@@ -182,24 +198,21 @@ function EpubViewer({ url }: { url: string }) {
       )}
       <div className={`h-screen w-screen p-3`}>
         {/* Control buttons */}
-        <div className="flex mb-2.5 justify-end">
+        <div className='flex mb-2.5 justify-end'>
           <div
-            className="flex flex-row absolute pl-3 transition-all delay-50"
+            className='flex flex-row absolute pl-3 transition-all delay-50'
             style={{ left: tocOn ? '160px' : '0px' }}
           >
-            <HiBars3
-              onClick={handleDisplayToc}
-              className="h-6 w-6 text-blue-400"
-            />
+            <HiBars3 onClick={handleDisplayToc} className='h-6 w-6 text-blue-400' />
           </div>
 
-          <div className="mr-1">
+          <div className='mr-1'>
             <SlideBtn renditionRef={renditionRef} />
           </div>
 
           <div
             onClick={() => navigate('/')}
-            className="flex flex-row items-center text-white bg-blue-500 rounded-lg pl-0.5 pr-1 cursor-pointer"
+            className='flex flex-row items-center text-white bg-blue-500 rounded-lg pl-0.5 pr-1 cursor-pointer'
           >
             <p>CHANGE BOOK</p>
           </div>
@@ -218,15 +231,10 @@ function EpubViewer({ url }: { url: string }) {
         />
 
         {/* Footer info */}
-        <div
-          style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }}
-          className="flex justify-between"
-        >
+        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 14 }} className='flex justify-between'>
           <button
             onClick={handleNext}
-            className={
-              'text-base w-30/100 active:opacity-5 transition transform duration-150'
-            }
+            className={'text-base w-30/100 active:opacity-5 transition transform duration-150'}
           >
             {'<<'} Next
           </button>
@@ -240,9 +248,7 @@ function EpubViewer({ url }: { url: string }) {
           </div>
           <button
             onClick={handlePrev}
-            className={
-              'text-base w-30/100 active:opacity-5 transition transform duration-150'
-            }
+            className={'text-base w-30/100 active:opacity-5 transition transform duration-150'}
           >
             Prev {'>>'}
           </button>
