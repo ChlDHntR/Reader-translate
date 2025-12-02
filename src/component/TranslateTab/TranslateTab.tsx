@@ -32,6 +32,7 @@ export default function TranslateTab() {
         const res = await axios.post(`${BaseUrl.returnUrl()}/api/analyze`, {
           content: inputTextRef.current?.value,
         })
+        console.log(res.data)
         if (res.data === 'no result found') {
           setResult(null)
           setAnalText({ analyze: [] })
