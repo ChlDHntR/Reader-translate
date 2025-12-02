@@ -26,7 +26,7 @@ function BookSelector() {
       'get',
       '/api/booklist',
       (arg) => {
-        setBookList(arg.list)
+        setBookList(arg)
         setFetching(false)
       },
       null
@@ -34,7 +34,6 @@ function BookSelector() {
   }, [])
 
   const handleRedirect = (book: string) => {
-    console.log('clicking', book)
     navigate(`/book/${book}`)
   }
 
